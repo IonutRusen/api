@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Payloads\v1\Company;
 
-final readonly class CreateCompany
+final readonly class CreateCompanyPayload
 {
     public function __construct(
         private string $name,

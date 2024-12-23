@@ -27,6 +27,7 @@ final class CompanyResource extends JsonApiResource
             'created' => new DateResource(
                 resource: $this->created_at,
             ),
+
         ];
     }
 }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Jobs\v1\Company;
 
-use App\Http\Payloads\v1\Company\CreateCompany;
+use App\Http\Payloads\v1\Company\CreateCompanyPayload;
 use App\Models\Company;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Foundation\Queue\Queueable;
 use Throwable;
 
-final class CreateNewCompany implements ShouldQueue
+final class CreateNewCompanyJob implements ShouldQueue
 {
     use Queueable;
 
@@ -19,7 +19,7 @@ final class CreateNewCompany implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        public readonly CreateCompany $payload,
+        public readonly CreateCompanyPayload $payload,
     ) {}
 
     /**

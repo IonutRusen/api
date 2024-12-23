@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\v1\Company;
 
-use App\Http\Payloads\v1\Company\CreateCompany;
+use App\Http\Payloads\v1\Company\CreateCompanyPayload;
 use Illuminate\Foundation\Http\FormRequest;
 
-final class WriteRequest extends FormRequest
+final class CompanyRequest extends FormRequest
 {
     public function rules(): array
     {
@@ -20,9 +20,9 @@ final class WriteRequest extends FormRequest
 
     }
 
-    public function payload()
+    public function payload(): CreateCompanyPayload
     {
-        return new CreateCompany(
+        return new CreateCompanyPayload(
             name: $this->string('name')->toString(),
             email: $this->string('email')->toString(),
             website: $this->string('website')->toString(),

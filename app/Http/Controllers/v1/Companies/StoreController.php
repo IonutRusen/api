@@ -16,13 +16,11 @@ final readonly class StoreController
         private Dispatcher $bus,
     ) {}
     public function __invoke(WriteRequest $request)
-
     {
 
         $this->bus->dispatch(
             command: new CreateNewCompany(
-               payload: $request->payload(),
-
+                payload: $request->payload(),
             ),
         );
 

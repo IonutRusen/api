@@ -28,7 +28,6 @@ final class WriteRequest extends FormRequest
             website: $this->string('website')->toString(),
             description: $this->string('description')->toString(),
             user: $this->user()->id,
-
         );
     }
 }

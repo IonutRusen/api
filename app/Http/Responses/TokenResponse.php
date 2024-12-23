@@ -12,7 +12,6 @@ use Laravel\Sanctum\NewAccessToken;
 final readonly class TokenResponse implements Responsable
 {
     public function __construct(
-
         private NewAccessToken $token,
         private Status $status = Status::OK,
     ) {}

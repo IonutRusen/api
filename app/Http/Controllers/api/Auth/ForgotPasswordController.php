@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use Illuminate\Support\Facades\Password;
 
-class ForgotPasswordController extends Controller
+final class ForgotPasswordController extends Controller
 {
     public function __invoke(ForgotPasswordRequest $request)
     {
         $status = Password::sendResetLink(
-            $request->only('email')
+            $request->only('email'),
         );
 
-        if ($status === Password::RESET_LINK_SENT) {
+        if (Password::RESET_LINK_SENT === $status) {
             return response()->json(['message' => __($status)], 200);
         }
 

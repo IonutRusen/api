@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\v1\Company;
 
 use App\Http\Payloads\v1\Company\CreateCompany;
@@ -7,8 +9,9 @@ use App\Models\Company;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Foundation\Queue\Queueable;
+use Throwable;
 
-class CreateNewCompany implements ShouldQueue
+final class CreateNewCompany implements ShouldQueue
 {
     use Queueable;
 
@@ -17,14 +20,11 @@ class CreateNewCompany implements ShouldQueue
      */
     public function __construct(
         public readonly CreateCompany $payload,
-    )
-    {
-        //
-    }
+    ) {}
 
     /**
      * Execute the job.
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function handle(DatabaseManager $database): void
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 
 use App\Http\Controllers\v1\Companies\IndexController;
 use App\Http\Controllers\v1\Companies\StoreController;

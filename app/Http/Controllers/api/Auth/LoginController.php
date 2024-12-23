@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\v1\UserResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+final class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request)
     {
         $credentials = $request->validated();
 
-        if (!Auth::attempt($credentials)) {
+        if ( ! Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'The provided credentials are incorrect.',
                 'errors' => [
@@ -28,7 +29,7 @@ class LoginController extends Controller
 
         return response()->json([
             'user' => new UserResource($user),
-            'token' => $token
+            'token' => $token,
         ], 200);
     }
 }

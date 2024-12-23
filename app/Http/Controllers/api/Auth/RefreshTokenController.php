@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RefreshTokenController extends Controller
+final class RefreshTokenController extends Controller
 {
     public function __invoke(Request $request)
     {
@@ -15,7 +17,7 @@ class RefreshTokenController extends Controller
         $newToken = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([
-            'token' => $newToken
+            'token' => $newToken,
         ], 200);
     }
 }

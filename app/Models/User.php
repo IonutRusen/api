@@ -14,11 +14,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 final class User extends Authenticatable
 {
+    use HasApiTokens;
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-    use Notifiable;
     use HasUlids;
-    use HasApiTokens;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +41,14 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
+    public function Companies(): HasMany
+    {
+        return $this->hasMany(
+            related: Company::class,
+            foreignKey: 'user_id',
+        );
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -52,13 +60,5 @@ final class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function Companies(): HasMany
-    {
-        return $this->hasMany(
-            related: Company::class,
-            foreignKey: 'user_id'
-        );
     }
 }

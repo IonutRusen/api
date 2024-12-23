@@ -12,12 +12,11 @@ use Illuminate\Http\Request;
 
 final readonly class IndexController
 {
-   public function __construct(
-         private FetchCompanies $query,
-   )
-   {}
+    public function __construct(
+        private FetchCompanies $query,
+    ) {}
 
-    public function __invoke(Request $request) : Responsable
+    public function __invoke(Request $request): Responsable
     {
         return new CollectionResponses(
             data: CompanyResource::collection(

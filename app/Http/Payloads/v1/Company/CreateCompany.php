@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace App\Http\Payloads\v1\Company;
 
 final readonly class CreateCompany
@@ -10,17 +11,17 @@ final readonly class CreateCompany
         private string $email,
         private string $website,
         private string $description,
-        private string $user
+        private string $user,
     ) {}
 
-    public function toArray() : array
+    public function toArray(): array
     {
         return [
             'name' => $this->name,
             'email' => $this->email,
             'website' => $this->website,
             'description' => $this->description,
-            'user_id' => $this->user
+            'user_id' => $this->user,
         ];
 
     }

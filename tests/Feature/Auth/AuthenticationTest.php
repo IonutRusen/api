@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 use App\Models\User;
 
+test('login screen can be rendered', function (): void {
+    $response = $this->get('/login');
+
+    $response->assertStatus(200);
+});
+
 test('users can authenticate using the login screen', function (): void {
     $user = User::factory()->create();
 
@@ -13,7 +19,7 @@ test('users can authenticate using the login screen', function (): void {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertNoContent();
+    $response->assertRedirect(route('dashboard', absolute: false));
 });
 
 test('users can not authenticate with invalid password', function (): void {
@@ -33,5 +39,5 @@ test('users can logout', function (): void {
     $response = $this->actingAs($user)->post('/logout');
 
     $this->assertGuest();
-    $response->assertNoContent();
+    $response->assertRedirect('/');
 });

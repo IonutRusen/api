@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-test('example', function (): void {
+it('returns a successful response', function (): void {
     $response = $this->get('/');
 
     $response->assertStatus(200);

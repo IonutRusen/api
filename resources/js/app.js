@@ -1,6 +1,7 @@
 import('./bootstrap');
 import { createApp } from 'vue';
 import { createWebHistory, createRouter } from "vue-router";
+import { createPinia } from 'pinia';
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
@@ -85,5 +86,8 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+const app = createApp(App);
 
-createApp(App).use(router).mount("#app");
+app.use(createPinia())
+app.use(router);
+app.mount("#app");

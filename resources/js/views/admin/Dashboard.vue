@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="flex flex-wrap">
+  <div class="container">
+      <div class="flex flex-wrap mt-4">
       <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
         <card-line-chart />
       </div>
@@ -19,10 +19,10 @@
   </div>
 </template>
 <script>
-import CardLineChart from "@/components/Cards/CardLineChart.vue";
-import CardBarChart from "@/components/Cards/CardBarChart.vue";
-import CardPageVisits from "@/components/Cards/CardPageVisits.vue";
-import CardSocialTraffic from "@/components/Cards/CardSocialTraffic.vue";
+import CardLineChart from "@/views/Cards/CardLineChart.vue";
+import CardBarChart from "@/views/Cards/CardBarChart.vue";
+import CardPageVisits from "@/views/Cards/CardPageVisits.vue";
+import CardSocialTraffic from "@/views/Cards/CardSocialTraffic.vue";
 export default {
   name: "dashboard-page",
   components: {

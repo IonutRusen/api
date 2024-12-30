@@ -1,7 +1,7 @@
 require('/js/bootstrap');
 
 import { createApp } from 'vue';
-import Welcome from './js/components/Welcome.vue';
+import Welcome from '@/views/Welcome.vue';
 
 createApp({
     components: {

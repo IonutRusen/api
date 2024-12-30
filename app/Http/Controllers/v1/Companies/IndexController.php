@@ -22,7 +22,7 @@ final readonly class IndexController
             resource: $this->query->handle(
                 includes: ['company'],
                 filters: ['status'],
-            )->paginate(5),
+            )->paginate($request->input('itemsPerPage', config('app.per_page'))),
         );
     }
 }

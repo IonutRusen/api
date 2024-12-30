@@ -14,6 +14,7 @@ import Index from "@/views/Index.vue";
 
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
+import CompanyListComponent from "@/components/Company/CompanyListComponent.vue";
 
 const routeAuthGuard = (to, from, next) => {
     const isLoggedIn = useAuthStore().user_information.isLoggedIn && hasToken()
@@ -40,6 +41,12 @@ const router = createRouter({
             redirect: "/admin/dashboard",
             component: Admin,
             children: [
+                {
+                    path: '/admin/companies',
+                    name: 'login',
+                    component: CompanyListComponent,
+                    beforeEnter: routeAuthGuard
+                },
                 {
                     path: "/admin/dashboard",
                     component: Dashboard,

@@ -26,6 +26,6 @@ final class DatabaseSeeder extends Seeder
 
         User::factory(20)->create();
 
-        Company::factory()->times(300)->create();
+        Company::factory()->times(5000)->create();
     }
 }

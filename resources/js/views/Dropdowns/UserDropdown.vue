@@ -62,8 +62,8 @@ import { createPopper } from "@popperjs/core";
 
 import image from "@/assets/img/team-1-800x800.jpg";
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { ErrorToast, InfoToast } from '@/composables/Toast'
+import { useAuthStore } from '@/stores/auth.js'
+import { ErrorToast, InfoToast } from '@/composables/Toast.js'
 import {ref} from "vue";
 
 const dropdownPopoverShow = ref(false)

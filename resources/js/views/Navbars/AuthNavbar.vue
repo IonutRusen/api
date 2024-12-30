@@ -97,7 +97,7 @@
   </nav>
 </template>
 <script>
-import PagesDropdown from "@/components/Dropdowns/PagesDropdown.vue";
+import PagesDropdown from "@/views/Dropdowns/PagesDropdown.vue";
 export default {
   data() {
     return {

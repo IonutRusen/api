@@ -12,10 +12,11 @@
             :items-length="dataFromStore.meta.total"
             :loading="dataFromStore.loading"
             item-value="name"
-            :pagination.sync="dataFromStore.links"
+            :pagination.sync="dataFromStore.meta"
             @update:options="loadItems"
             class="w-full bg-transparent border-collapse"
         ></v-data-table-server>
+
 
         </div>
 

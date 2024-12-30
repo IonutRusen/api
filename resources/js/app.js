@@ -1,7 +1,29 @@
 import('./bootstrap');
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+import App from './App.vue'
+import router from './router'
+
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@/assets/styles/tailwind.css";
+
+/*import './assets/toast.css'*/
+
+const app = createApp(App)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
+app.use(pinia)
+app.use(router)
+
+app.mount('#app')/*
+
 import { createApp } from 'vue';
 import { createWebHistory, createRouter } from "vue-router";
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
@@ -37,6 +59,7 @@ const routes = [
             {
                 path: "/admin/dashboard",
                 component: Dashboard,
+                name: "admin.dashboard",
             },
             {
                 path: "/admin/settings",
@@ -60,6 +83,7 @@ const routes = [
             {
                 path: "/auth/login",
                 component: Login,
+                name: "auth.login",
             },
             {
                 path: "/auth/register",
@@ -87,7 +111,9 @@ const router = createRouter({
     routes,
 });
 const app = createApp(App);
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
 app.use(createPinia())
 app.use(router);
-app.mount("#app");
+app.mount("#app");*/

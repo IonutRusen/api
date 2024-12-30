@@ -13,14 +13,14 @@
                         </div>
                         <div class="btn-wrapper text-center">
                             <button
-                                class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
+                                class="bg-white active:bg-blueGray-50 text-blueGray-700  px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center  text-xs ease-linear transition-all duration-150"
                                 type="button"
                             >
                                 <img alt="..." class="w-5 mr-1" :src="github"/>
                                 Github
                             </button>
                             <button
-                                class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
+                                class="bg-white active:bg-blueGray-50 text-blueGray-700  px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center text-xs ease-linear transition-all duration-150"
                                 type="button"
                             >
                                 <img alt="..." class="w-5 mr-1" :src="google"/>
@@ -44,7 +44,7 @@
                                 <input
                                     type="email"
                                     id="email"
-                                    v-model="formData.email"
+                                    v-model="email"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                     placeholder="Email"
                                     required
@@ -61,7 +61,7 @@
                                 <input
                                     type="password"
                                     id="password"
-                                    v-model="formData.password"
+                                    v-model="password"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                     placeholder="Password"
                                     required
@@ -111,46 +111,39 @@
 import github from "@/assets/img/github.svg";
 import google from "@/assets/img/google.svg";
 
-import { ref, onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import {AuthStore} from '@/src/stores/AuthStore'
-import Swal from 'sweetalert2';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+import { useAuthStore } from '@/stores/auth.js'
+
+// import Swal from 'sweetalert2';
+
 const formData=ref({ email:'test@example.com',password:'password'})
+const email = ref('')
+const password = ref('')
+const errors = ref(null)
+const router = useRouter()
 
-const {loginUser,CheckAuth} = AuthStore()
-const { if_authenticated } = storeToRefs(AuthStore())
+const auth = useAuthStore()
 
-const router= useRouter()
+const fn_login = () => {
+    auth
+        .login(email.value, password.value)
+        .then((token) => {
+            email.value = ''
+            password.value = ''
+            auth.setUserToken(token)
 
-const fn_login = async () => {
-
-    alert('login')
-    const {ok, message } = await loginUser(formData.value)
-    if (ok) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: message, // Puedes personalizar el mensaje que se muestra
+            router.push({name:'admin.dashboard'})
         })
-        router.push({name:'index'})
+        .catch((err) => {
+            if (err.status === 401) {
 
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: message, // Puedes personalizar el mensaje de error
+            } else {
+                errors.value = err.message
+            }
         })
-    } }
+}
 
-onMounted( async() => {
 
-    const {ok} = await CheckAuth()
-    if(ok)
-    {
-
-       // router.push({ name:'home'})
-    }
-})
 </script>

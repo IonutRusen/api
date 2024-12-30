@@ -22,4 +22,5 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js', // Alias for runtime + compiler build
         },
     },
+
 });

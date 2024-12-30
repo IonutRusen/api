@@ -2,7 +2,7 @@
   <div>
     <a
       class="text-blueGray-500 block"
-      href="#pablo"
+      href="#"
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
     >
@@ -41,6 +41,7 @@
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+
       >
         Something else here
       </a>
@@ -48,37 +49,50 @@
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+        @click.prevent="handleLogout"
       >
-        Seprated link
+       Logout
       </a>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import { createPopper } from "@popperjs/core";
 
 import image from "@/assets/img/team-1-800x800.jpg";
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { ErrorToast, InfoToast } from '@/composables/Toast'
+import {ref} from "vue";
 
-export default {
-  data() {
-    return {
-      dropdownPopoverShow: false,
-      image: image,
-    };
-  },
-  methods: {
-    toggleDropdown: function (event) {
-      event.preventDefault();
-      if (this.dropdownPopoverShow) {
-        this.dropdownPopoverShow = false;
-      } else {
-        this.dropdownPopoverShow = true;
-        createPopper(this.$refs.btnDropdownRef, this.$refs.popoverDropdownRef, {
-          placement: "bottom-start",
+const dropdownPopoverShow = ref(false)
+const btnDropdownRef = ref(null)
+const popoverDropdownRef = ref(null)
+
+const auth = useAuthStore()
+const router = useRouter()
+const toggleDropdown = (event) => {
+    event.preventDefault();
+    if (dropdownPopoverShow.value) {
+        dropdownPopoverShow.value = false;
+    } else {
+        dropdownPopoverShow.value = true;
+        createPopper(btnDropdownRef.value, popoverDropdownRef.value, {
+            placement: "bottom-start",
         });
-      }
-    },
-  },
-};
+    }
+}
+const handleLogout = () => {
+    auth
+        .logout()
+        .then(() => {
+            auth.removeUserToken()
+            InfoToast('Logged Out')
+            router.push({name: 'auth.login'})
+        })
+        .catch((err) => {
+            ErrorToast(err.message)
+        })
+}
 </script>

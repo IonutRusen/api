@@ -15,14 +15,18 @@ final readonly class IndexController
         private FetchCompanies $query,
     ) {}
 
-    public function __invoke(Request $request): Responsable
+    public function __invoke(Request $request)/*: Responsable*/
     {
-
         return  CompanyResource::collection(
             resource: $this->query->handle(
                 includes: ['company'],
                 filters: ['status'],
-            )->paginate($request->input('itemsPerPage', config('app.per_page'))),
+                sortBy: $request->input('sortBy'),
+                order: $request->input('orderBy'),
+            )->paginate(
+                perPage: $request->input('itemsPerPage') ?? config('app.per_page'),
+                page: $request->input('page')
+            ),
         );
     }
 }

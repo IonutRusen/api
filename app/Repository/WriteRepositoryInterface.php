@@ -1,0 +1,11 @@
+<?php
+namespace App\Repository;
+
+
+
+
+interface WriteRepositoryInterface {
+  public function create($data);
+  public function update($id, $data);
+  public function deleteById($id);
+}

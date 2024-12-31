@@ -2,13 +2,21 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\api\Auth\ForgotPasswordController;
-use App\Http\Controllers\api\Auth\LoginController;
-use App\Http\Controllers\api\Auth\LogoutController;
-use App\Http\Controllers\api\Auth\RefreshTokenController;
-use App\Http\Controllers\api\Auth\ResetPasswordController;
+
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', [AuthController::class, 'login'])->name('user.login');
+
+    Route::group(['middleware' => 'auth:sanctum'], function() {
+        Route::get('logout', [AuthController::class, 'logout'])->name('user.logout');
+        Route::get('user', [AuthController::class, 'user'])->name('user.verify');
+    });
+});
+
+
 
 Route::middleware(['auth:sanctum'])->get('/user', fn(Request $request) => $request->user());
 Route::prefix('v1')->as('v1:')->middleware('auth:sanctum')->group(static function (): void {
@@ -18,13 +26,4 @@ Route::prefix('v1')->as('v1:')->middleware('auth:sanctum')->group(static functio
         ));
 });
 
-Route::group(['prefix' => 'auth'], function (): void {
-    Route::post('login', LoginController::class)->name('user.login');
-    Route::post('forgot-password', ForgotPasswordController::class)->name('user.forgot-password');
-    Route::post('reset-password', ResetPasswordController::class)->name('user.reset-password');
 
-    Route::group(['middleware' => 'auth:sanctum'], function (): void {
-        Route::post('logout', LogoutController::class)->name('user.logout');
-        Route::post('refresh', RefreshTokenController::class)->name('user.refresh');
-    });
-});

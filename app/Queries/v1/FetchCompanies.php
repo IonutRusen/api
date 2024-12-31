@@ -10,15 +10,22 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class FetchCompanies
 {
-    public function handle(array $includes = [], $filters = []): Builder
+    public function handle(array $includes = [], $filters = [], $sortBy = null, $order = 'asc'): Builder
     {
-        return QueryBuilder::for(
+
+        $q = QueryBuilder::for(
             subject: Company::query(),
-        )->allowedIncludes(
-            includes: $includes,
-        )->allowedFilters(
-            filters: $filters,
-        )->where('user_id', auth()->id())
-            ->getEloquentBuilder();
+        )
+            ->allowedSorts('name', 'street')
+            ->allowedIncludes(
+                includes: $includes,
+            )->allowedFilters(
+                filters: $filters,
+            )->where('user_id', auth()->id());
+
+        if ($sortBy) {
+            $q->orderBy($sortBy ?? 'name', $order);
+        }
+        return $q->getEloquentBuilder();
     }
 }

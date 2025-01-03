@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\City;
@@ -8,7 +10,7 @@ use App\Modules\Company\Model\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CompanyTest extends TestCase
+final class CompanyTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,7 +19,7 @@ class CompanyTest extends TestCase
      *
      * @return void
      */
-    public function test_create_company()
+    public function test_create_company(): void
     {
         // Consistent fake data
         $name = fake()->name();
@@ -58,7 +60,7 @@ class CompanyTest extends TestCase
      *
      * @return void
      */
-    public function test_read_company()
+    public function test_read_company(): void
     {
         $company = Company::factory()->create();
 
@@ -74,7 +76,7 @@ class CompanyTest extends TestCase
      *
      * @return void
      */
-    public function test_update_company()
+    public function test_update_company(): void
     {
         $company = Company::factory()->create();
         $state = State::inRandomOrder()->first();
@@ -114,7 +116,7 @@ class CompanyTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_company()
+    public function test_delete_company(): void
     {
         $company = Company::factory()->create();
 

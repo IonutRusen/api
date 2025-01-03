@@ -29,7 +29,7 @@
         "ignore": "comments"
       }
     ],
-    "@stylistic/indentation": 2,
+    "@stylistic/indentation": 4,
     "liberty/use-logical-spec": true,
     "selector-class-pattern": null,
     "color-function-notation": null,

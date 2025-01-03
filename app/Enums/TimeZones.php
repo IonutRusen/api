@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 use App\Services\Enum;
 
-class TimeZones extends Enum
+final class TimeZones extends Enum
 {
     public const Eastern = 1;
     public const Central = 2;

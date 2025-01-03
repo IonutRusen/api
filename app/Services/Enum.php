@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Exceptions\Enum as Exception;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 
-class Enum
+final class Enum
 {
-    protected static array $data;
+    private static array $data;
 
-    protected static bool $localisation = true;
+    private static bool $localisation = true;
 
-    protected static bool $validatesKeys = false;
+    private static bool $validatesKeys = false;
 
     public static function get($key)
     {
@@ -28,52 +30,17 @@ class Enum
         return self::attributes()->has($key);
     }
 
-    private static function attributes(): Collection
-    {
-        return self::transAll(self::source());
-    }
-
-    private static function transAll($data): Collection
-    {
-        return Collection::wrap($data)->map(fn ($value) => self::trans($value));
-    }
-
-    private static function trans($value)
-    {
-        return is_string($value) && static::$localisation
-            ? __($value)
-            : $value;
-    }
-
-    private static function source(): array
-    {
-        if (! empty(static::data())) {
-            return static::data();
-        }
-
-        if (isset(static::$data)) {
-            return static::$data;
-        }
-
-        return static::constants();
-    }
-
-    protected static function data(): array
-    {
-        return [];
-    }
-
     public static function constants(): array
     {
         $reflection = new ReflectionClass(static::class);
 
-        $filter = fn ($constant) => is_string($constant) || is_numeric($constant);
+        $filter = fn($constant) => is_string($constant) || is_numeric($constant);
 
         $valid = array_filter($reflection->getConstants(), $filter);
 
         $constants = array_flip($valid);
 
-        $filter = fn ($constant) => $reflection
+        $filter = fn($constant) => $reflection
             ->getReflectionConstant($constant)->isPublic();
 
         $public = array_filter($constants, $filter);
@@ -114,7 +81,7 @@ class Enum
     public static function select(): Collection
     {
         return self::attributes()
-            ->map(fn ($value, $key) => (object) ['id' => $key, 'name' => $value])
+            ->map(fn($value, $key) => (object) ['id' => $key, 'name' => $value])
             ->values();
     }
 
@@ -126,5 +93,40 @@ class Enum
     public static function localisation(bool $state = true): void
     {
         static::$localisation = $state;
+    }
+
+    private static function attributes(): Collection
+    {
+        return self::transAll(self::source());
+    }
+
+    private static function transAll($data): Collection
+    {
+        return Collection::wrap($data)->map(fn($value) => self::trans($value));
+    }
+
+    private static function trans($value)
+    {
+        return is_string($value) && static::$localisation
+            ? __($value)
+            : $value;
+    }
+
+    private static function source(): array
+    {
+        if ( ! empty(static::data())) {
+            return static::data();
+        }
+
+        if (isset(static::$data)) {
+            return static::$data;
+        }
+
+        return static::constants();
+    }
+
+    private static function data(): array
+    {
+        return [];
     }
 }

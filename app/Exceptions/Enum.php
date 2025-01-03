@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use InvalidArgumentException;
 
-class Enum extends InvalidArgumentException
+final class Enum extends InvalidArgumentException
 {
     public static function keyNotFound(): static
     {

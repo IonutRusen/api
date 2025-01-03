@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\JsonResponse;
 
-if (!function_exists('sendApiResponse')) {
+if ( ! function_exists('sendApiResponse')) {
     function sendApiResponse($error, $data, $message, $status = 200): JsonResponse
     {
-        if ($message instanceof \Illuminate\Support\MessageBag) {
+        if ($message instanceof Illuminate\Support\MessageBag) {
             $message = $message->all();
             $message = implode(' ', $message);
         } elseif (is_array($message)) {
@@ -13,7 +15,7 @@ if (!function_exists('sendApiResponse')) {
         }
 
         $response = [
-            'success' => !$error,
+            'success' => ! $error,
             'status' => $status,
             'error' => $error,
             'message' => is_array($message) ? implode(' ', extractErrorMessages($message)) : $message,
@@ -24,7 +26,7 @@ if (!function_exists('sendApiResponse')) {
         return response()->json($response, $status);
     }
 }
-if(!function_exists('extractErrorMessages')) {
+if ( ! function_exists('extractErrorMessages')) {
     function extractErrorMessages($messages): array
     {
         $errors = [];

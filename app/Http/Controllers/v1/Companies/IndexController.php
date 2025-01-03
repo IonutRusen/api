@@ -25,7 +25,7 @@ final readonly class IndexController
                 order: $request->input('orderBy'),
             )->paginate(
                 perPage: $request->input('itemsPerPage') ?? config('app.per_page'),
-                page: $request->input('page')
+                page: $request->input('page'),
             ),
         );
     }

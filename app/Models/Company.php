@@ -49,7 +49,7 @@ final class Company extends Model
 
     }
 
-    public function addresses() : HasMany
+    public function addresses(): HasMany
     {
         return $this->hasMany(
             related: CompanyAddress::class,

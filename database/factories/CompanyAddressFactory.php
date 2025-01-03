@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Company;
@@ -9,9 +11,8 @@ use MatanYadaev\EloquentSpatial\Objects\Point;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CompanyAddress>
  */
-class CompanyAddressFactory extends Factory
+final class CompanyAddressFactory extends Factory
 {
-
     public function definition(): array
     {
         return [
@@ -25,13 +26,13 @@ class CompanyAddressFactory extends Factory
             'email' => $this->faker->email,
             'website' => $this->faker->url,
             'location' => new Point(
-                latitude: (float)$this->generateRandomCoordinate(-90, 90),
-                longitude:   (float)$this->generateRandomCoordinate(-180, 180),
+                latitude: (float) $this->generateRandomCoordinate(-90, 90),
+                longitude: (float) $this->generateRandomCoordinate(-180, 180),
             ),
         ];
     }
 
-    function generateRandomCoordinate($min, $max)
+    public function generateRandomCoordinate($min, $max)
     {
         return mt_rand($min * 1000000, $max * 1000000) / 1000000.0;
     }

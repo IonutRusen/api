@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\v1\CompanyResource;
-use App\Models\Company;
 use App\Queries\v1\FetchCompanies;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Request;
 
-class TestController extends Controller
+final class TestController extends Controller
 {
     public function __construct(
         private FetchCompanies $query,
@@ -23,7 +23,7 @@ class TestController extends Controller
                 order: $request->input('orderBy'),
             )->paginate(
                 perPage: $request->input('itemsPerPage') ?? config('app.per_page'),
-                page: $request->input('page')
+                page: $request->input('page'),
             ),
         );
     }

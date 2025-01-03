@@ -13,7 +13,6 @@ final class CompanyRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|min:2|max:255',
             'website' => 'required|url|min:11|max:255',
             'description' => 'required|string|min:2|max:255',
         ];
@@ -24,7 +23,6 @@ final class CompanyRequest extends FormRequest
     {
         return new CreateCompanyPayload(
             name: $this->string('name')->toString(),
-            email: $this->string('email')->toString(),
             website: $this->string('website')->toString(),
             description: $this->string('description')->toString(),
             user: $this->user()->id,

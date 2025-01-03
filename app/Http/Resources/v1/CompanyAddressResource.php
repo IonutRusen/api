@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\v1;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use TiMacDonald\JsonApi\JsonApiResource;
 
-class CompanyAddressResource extends JsonApiResource
+final class CompanyAddressResource extends JsonApiResource
 {
     /**
      * Transform the resource into an array.

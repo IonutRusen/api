@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 use App\Services\Enum;
 
-class PayRollCycles extends Enum
+final class PayRollCycles extends Enum
 {
     public const WEEKLY = 1;
     public const BIWEEKLY = 2;
     public const TWICE_A_MONTH = 3;
     public const MONTHLY = 4;
-    //
+
 
     protected static array $data = [
         self::MONTHLY => 'Monthly',
@@ -29,4 +31,3 @@ class PayRollCycles extends Enum
         return self::$data[$value];
     }
 }
-

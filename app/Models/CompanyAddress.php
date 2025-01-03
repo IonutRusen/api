@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -8,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use MatanYadaev\EloquentSpatial\Objects\Point;
 use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
 
-class CompanyAddress extends Model
+final class CompanyAddress extends Model
 {
-    use HasFactory, HasUlids, HasSpatial;
+    use HasFactory;
+    use HasSpatial;
+    use HasUlids;
 
     protected $fillable = [
         'company_id',
@@ -26,7 +30,7 @@ class CompanyAddress extends Model
     ];
 
     protected $casts = [
-        'location' => Point::class
+        'location' => Point::class,
     ];
 
 }

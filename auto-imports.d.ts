@@ -351,6 +351,7 @@ declare global {
   const watchThrottled: typeof import('@vueuse/core')['watchThrottled']
   const watchTriggerable: typeof import('@vueuse/core')['watchTriggerable']
   const watchWithFilter: typeof import('@vueuse/core')['watchWithFilter']
+  const websiteValidator: typeof import('./resources/js/@core/utils/validators.js')['websiteValidator']
   const whenever: typeof import('@vueuse/core')['whenever']
 }
 // for type re-export

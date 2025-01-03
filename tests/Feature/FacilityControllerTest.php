@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Modules\Company\Model\Company;
@@ -12,7 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
 use Tests\TestCase;
 
-class FacilityControllerTest extends TestCase
+final class FacilityControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -23,14 +25,14 @@ class FacilityControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->repository = \Mockery::mock(Repository::class);
+        $this->repository = Mockery::mock(Repository::class);
         $this->facilityController = new FacilityController($this->repository);
     }
 
     /**
      * Test 'index' method of 'FacilityController' class
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $user = User::factory()->create();
         $token = $user->createToken('TestToken')->plainTextToken;
@@ -58,7 +60,7 @@ class FacilityControllerTest extends TestCase
     /**
      * Test 'store' method of 'FacilityController' class
      */
-    public function testStoreSuccessfullyCreatesFacility()
+    public function testStoreSuccessfullyCreatesFacility(): void
     {
         // Arrange
         $user = User::factory()->create();
@@ -78,13 +80,13 @@ class FacilityControllerTest extends TestCase
         $repositoryMock->shouldReceive('create')
 
             ->with($data)
-            ->andReturn((object)$data);
+            ->andReturn((object) $data);
 
         $this->app->instance(Repository::class, $repositoryMock);
 
         // Act
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->postJson(route('facility.store'),$data);
+            ->postJson(route('facility.store'), $data);
 
         // Assert the response status
         $response->assertStatus(200);
@@ -95,7 +97,7 @@ class FacilityControllerTest extends TestCase
     /**
      * Test 'show' method of 'FacilityController' class.
      */
-    public function testShowSuccessfullyShowsFacility()
+    public function testShowSuccessfullyShowsFacility(): void
     {
         // Arrange
         $user = User::factory()->create();
@@ -105,7 +107,7 @@ class FacilityControllerTest extends TestCase
         $repositoryMock = Mockery::mock(Repository::class);
         $repositoryMock->shouldReceive('findOrFail')
             ->with($facility->id)
-            ->andReturn((object)$facility->toArray());
+            ->andReturn((object) $facility->toArray());
 
         $this->app->instance(Repository::class, $repositoryMock);
 
@@ -120,7 +122,7 @@ class FacilityControllerTest extends TestCase
     /**
      * Test 'update' method of 'FacilityController' class
      */
-    public function testUpdateSuccessfullyUpdatesFacility()
+    public function testUpdateSuccessfullyUpdatesFacility(): void
     {
         // Arrange
         $user = User::factory()->create();
@@ -138,7 +140,7 @@ class FacilityControllerTest extends TestCase
         $repositoryMock = Mockery::mock(Repository::class);
         $repositoryMock->shouldReceive('update')
             ->with($facility->id, $data)
-            ->andReturn((object)$data);
+            ->andReturn((object) $data);
 
         $this->app->instance(Repository::class, $repositoryMock);
 
@@ -155,7 +157,7 @@ class FacilityControllerTest extends TestCase
     /**
      * Test 'destroy' method of 'FacilityController' class
      */
-    public function testDestroySuccessfullyRemovesFacility()
+    public function testDestroySuccessfullyRemovesFacility(): void
     {
         // Arrange
         $user = User::factory()->create();

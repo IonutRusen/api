@@ -10,7 +10,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class FetchCompanies
 {
-    public function handle(array $includes = [], $filters = [], $sortBy = null, $order = 'asc'): Builder
+    public function handle(array $allowedIncludes = [], $filters = [], $sortBy = null, $order = 'asc'): Builder
     {
 
         $q = QueryBuilder::for(
@@ -18,11 +18,11 @@ final class FetchCompanies
         )
             ->allowedSorts('name', 'street')
             ->allowedIncludes(
-                includes: $includes,
+                includes: $allowedIncludes,
             )->allowedFilters(
                 filters: $filters,
             )
-            /*->where('user_id', auth()->id())*/;
+            ->where('user_id', auth()->id());
 
         if ($sortBy) {
             $q->orderBy($sortBy ?? 'name', $order);

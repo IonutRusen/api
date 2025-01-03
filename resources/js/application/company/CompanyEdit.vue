@@ -18,15 +18,16 @@ const errors = ref({})
 
 onMounted(() => {
   fetchFacility()
-  fetchPayrollCycles()
-  fetchTimeZones()
+
 })
 
 const fetchFacility = async () => {
   try {
-    const res = await $api(`/facility/${route.params.id}`, {
+    const res = await $api(`v1/companies/${route.params.id}`, {
       method: 'GET',
     })
+
+
 
     if (res) {
       name.value = res.data.name
@@ -35,7 +36,11 @@ const fetchFacility = async () => {
       licenseNo.value = res.data.licence_no
     }
   } catch (err) {
-    console.error(err)
+    if (err.response && err.response.status === 403) {
+      router.push('/companies/list')
+    } else {
+      console.error('An unexpected error occurred:', err)
+    }
   }
 }
 

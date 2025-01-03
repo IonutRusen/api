@@ -25,8 +25,8 @@ class CompanyAddressFactory extends Factory
             'email' => $this->faker->email,
             'website' => $this->faker->url,
             'location' => new Point(
-                latitude: 28.123456,//(float)$this->generateRandomCoordinate(-90, 90),
-                longitude:  39.123456,// (float)$this->generateRandomCoordinate(-180, 180),
+                latitude: (float)$this->generateRandomCoordinate(-90, 90),
+                longitude:   (float)$this->generateRandomCoordinate(-180, 180),
             ),
         ];
     }

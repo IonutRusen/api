@@ -22,6 +22,10 @@ class CompanyAddressResource extends JsonApiResource
             'state' => $this->state,
             'zip' => $this->zip,
             'country' => $this->country,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'website' => $this->website,
+            'location' => $this->location,
         ];
     }
 }

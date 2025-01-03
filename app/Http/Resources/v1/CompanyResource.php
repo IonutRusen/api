@@ -12,8 +12,7 @@ use TiMacDonald\JsonApi\JsonApiResource;
 /**
  * @property mixed $created_at
  * @property mixed $name
- * @property mixed $website
- * @property mixed $logo
+ *
  */
 final class CompanyResource extends JsonApiResource
 {
@@ -33,7 +32,10 @@ final class CompanyResource extends JsonApiResource
                 resource: $this->created_at,
             ),
             'relationship' => [
-                'addresses' => $this->whenLoaded( relationship: 'addresses'),
+                'addresses' => $this->whenLoaded(
+                    'addresses',
+                    CompanyAddressResource::collection($this->addresses)
+                ),
             ],
 
         ];

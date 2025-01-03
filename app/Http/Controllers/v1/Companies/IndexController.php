@@ -15,11 +15,11 @@ final readonly class IndexController
         private FetchCompanies $query,
     ) {}
 
-    public function __invoke(Request $request)/*: Responsable*/
+    public function __invoke(Request $request): Responsable
     {
         return  CompanyResource::collection(
             resource: $this->query->handle(
-                includes: ['addresses'],
+                allowedIncludes: ['addresses'],
                 filters: ['status'],
                 sortBy: $request->input('sortBy'),
                 order: $request->input('orderBy'),

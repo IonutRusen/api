@@ -10,7 +10,6 @@ use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-
 final readonly class ApiErrorResponse implements Responsable
 {
     /**
@@ -20,8 +19,7 @@ final readonly class ApiErrorResponse implements Responsable
     public function __construct(
         private ApiError  $data,
         private Status $status = Status::INTERNAL_SERVER_ERROR,
-    ) {
-    }
+    ) {}
 
     /**
      * @param Request $request

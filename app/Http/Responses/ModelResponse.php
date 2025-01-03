@@ -22,7 +22,6 @@ final readonly class ModelResponse implements Responsable
         return new JsonResponse(
             data: $this->model,
             status: $this->status->value,
-
         );
     }
 }

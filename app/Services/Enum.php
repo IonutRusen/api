@@ -8,7 +8,7 @@ use App\Exceptions\Enum as Exception;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 
-final class Enum
+class Enum
 {
     private static array $data;
 

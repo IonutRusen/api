@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ApiResponses;
 
-readonly class ApiError
+final readonly class ApiError
 {
     /**
      * @param string $title The Human readable title of the error
@@ -18,8 +19,7 @@ readonly class ApiError
         private string $instance,
         private string $code,
         private null|string $link = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @param array{title:string,detail:string,instance:string,code:string,link:null|string} $data

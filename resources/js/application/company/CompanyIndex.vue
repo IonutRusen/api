@@ -55,6 +55,7 @@ const {
     page,
     sortBy,
     orderBy,
+    include: 'addresses',
   },
 }))
 

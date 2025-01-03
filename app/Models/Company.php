@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Company extends Model
 {
@@ -30,5 +31,13 @@ final class Company extends Model
             foreignKey: 'user_id',
         );
 
+    }
+
+    public function addresses() : HasMany
+    {
+        return $this->hasMany(
+            related: CompanyAddress::class,
+            foreignKey: 'company_id',
+        );
     }
 }

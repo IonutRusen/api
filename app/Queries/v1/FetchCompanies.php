@@ -21,7 +21,8 @@ final class FetchCompanies
                 includes: $includes,
             )->allowedFilters(
                 filters: $filters,
-            )->where('user_id', auth()->id());
+            )
+            /*->where('user_id', auth()->id())*/;
 
         if ($sortBy) {
             $q->orderBy($sortBy ?? 'name', $order);

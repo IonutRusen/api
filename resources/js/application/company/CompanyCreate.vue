@@ -1,9 +1,7 @@
 <script setup>
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue"
-import AppSelect from "@core/components/app-form-elements/AppSelect.vue";
+import AppSelect from "@core/components/app-form-elements/AppSelect.vue"
 
-const invalid = false
-const route = useRoute()
 const router = useRouter()
 const payrollCycles = ref([])
 const timeZones = ref([])
@@ -16,72 +14,24 @@ const refForm = ref()
 const errors = ref({})
 
 
-onMounted(() => {
-  fetchFacility()
-  fetchPayrollCycles()
-  fetchTimeZones()
-})
 
-const fetchFacility = async () => {
-  try {
-    const res = await $api(`/facility/${route.params.id}`, {
-      method: 'GET',
-    })
-
-    if (res) {
-      name.value = res.data.name
-      timeZoneId.value = res.data.time_zone_id
-      payrollCycleId.value = res.data.pay_roll_cycle_id
-      licenseNo.value = res.data.licence_no
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-const fetchPayrollCycles = async () => {
-  try {
-    const res = await $api(`/options/payroll-cycles`, {
-      method: 'GET',
-    })
-
-    if (res) {
-      payrollCycles.value = res.data
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-const fetchTimeZones = async () => {
-  try {
-    const res = await $api(`/options/time-zones`, {
-      method: 'GET',
-    })
-
-    if (res) {
-      timeZones.value = res.data
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
 
 const sendData = async () => {
   try {
-    const res = await $api(`/facility/${route.params.id}`, {
-      method: 'PUT',
+    const res = await $api('/facility', {
+      method: 'POST',
       body: {
         name: name.value,
-        licence_no: licenseNo.value,
-        time_zone_id: timeZoneId.value,
-        pay_roll_cycle_id: payrollCycleId.value,
-        company_id: 1,
+        licenceNo: licenseNo.value,
+        timeZoneId: timeZoneId.value,
+        payrollCycleId: payrollCycleId.value,
+        companyId: 1,
       },
-      onResponseError({response}) {
+      onResponseError({ response }) {
+        if (response.status === 422) {
+          errors.value = response._data.errors
+        }
 
-        errors.value = response._data.errors
-        console.log(response._data.errors)
       },
     })
 
@@ -90,12 +40,11 @@ const sendData = async () => {
     }
 
     await nextTick(() => {
-      router.push('/facilities')
+      router.push('/company/list')
     })
 
   } catch (err) {
-
-
+    console.error(err)
   }
 }
 
@@ -110,17 +59,9 @@ const submitForm = () => {
 
 <template>
   <VCard flat>
-    <VCardTitle
-      cols="12"
-      class="d-flex gap-4"
-    >
-      <VRow no-gutters>
-        <VCol cols="6">
-          Edit Facility
-        </VCol>
-      </VRow>
+    <VCardTitle>
+      Create New Facility
     </VCardTitle>
-
     <VCardText>
       <VForm
         ref="refForm"
@@ -146,10 +87,14 @@ const submitForm = () => {
           >
             <AppTextField
               v-model="licenseNo"
-              :rules="[requiredValidator]"
+
               label="License Number"
               placeholder="xxxx-xxxx-xxxx"
             />
+            <span
+              v-if="errors.licence_no"
+              class="text-red-600"
+            >{{ errors.licence_no[0] }}</span>
           </VCol>
 
           <VCol
@@ -161,10 +106,14 @@ const submitForm = () => {
               label="Time Zone"
               placeholder="Select Time Zone"
               :items="timeZones"
-              :rules="[requiredValidator]"
+
               item-title="name"
               item-value="id"
             />
+            <span
+              v-if="errors.time_zone_id"
+              class="text-red"
+            >{{ errors.time_zone_id[0] }}</span>
           </VCol>
 
           <VCol
@@ -176,25 +125,29 @@ const submitForm = () => {
               label="Payroll Cycle"
               placeholder="Select Payroll Cycle"
               :items="payrollCycles"
-              :rules="[requiredValidator]"
+
               item-title="name"
               item-value="id"
             />
+            <span
+              v-if="errors.pay_roll_cycle_id"
+              class="v-messages__message"
+            >{{ errors.pay_roll_cycle_id[0] }}</span>
           </VCol>
+
           <VCol
             cols="12"
             class="d-flex gap-4"
           >
-            <VBtn 
-              type="submit" 
-              :disabled=" invalid ">
+            <VBtn type="submit">
               Submit
             </VBtn>
+
             <VBtn
               color="secondary"
               variant="tonal"
               prepend-icon="tabler-arrow-left"
-              :to="{ name: 'facilities-list' }"
+              :to="{ name: 'companies-list' }"
             >
               {{ $t('Back') }}
             </VBtn>

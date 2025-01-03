@@ -19,7 +19,7 @@ final readonly class IndexController
     {
         return  CompanyResource::collection(
             resource: $this->query->handle(
-                includes: ['company'],
+                includes: ['addresses'],
                 filters: ['status'],
                 sortBy: $request->input('sortBy'),
                 order: $request->input('orderBy'),

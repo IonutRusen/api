@@ -1,7 +1,9 @@
 <script setup>
-import AppTextField from "@core/components/app-form-elements/AppTextField.vue";
-import AppSelect from "@core/components/app-form-elements/AppSelect.vue";
+import AppTextField from "@core/components/app-form-elements/AppTextField.vue"
+import AppSelect from "@core/components/app-form-elements/AppSelect.vue"
 
+const invalid = false
+const route = useRoute()
 const router = useRouter()
 const payrollCycles = ref([])
 const timeZones = ref([])
@@ -13,10 +15,29 @@ const isFormValid = ref(false)
 const refForm = ref()
 const errors = ref({})
 
+
 onMounted(() => {
+  fetchFacility()
   fetchPayrollCycles()
   fetchTimeZones()
 })
+
+const fetchFacility = async () => {
+  try {
+    const res = await $api(`/facility/${route.params.id}`, {
+      method: 'GET',
+    })
+
+    if (res) {
+      name.value = res.data.name
+      timeZoneId.value = res.data.time_zone_id
+      payrollCycleId.value = res.data.pay_roll_cycle_id
+      licenseNo.value = res.data.licence_no
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 const fetchPayrollCycles = async () => {
   try {
@@ -48,20 +69,19 @@ const fetchTimeZones = async () => {
 
 const sendData = async () => {
   try {
-    const res = await $api('/facility', {
-      method: 'POST',
+    const res = await $api(`/facility/${route.params.id}`, {
+      method: 'PUT',
       body: {
         name: name.value,
-        licenceNo: licenseNo.value,
-        timeZoneId: timeZoneId.value,
-        payrollCycleId: payrollCycleId.value,
-        companyId: 1,
+        licence_no: licenseNo.value,
+        time_zone_id: timeZoneId.value,
+        pay_roll_cycle_id: payrollCycleId.value,
+        company_id: 1,
       },
       onResponseError({ response }) {
-        if (response.status === 422) {
-          errors.value = response._data.errors
-        }
 
+        errors.value = response._data.errors
+        console.log(response._data.errors)
       },
     })
 
@@ -74,7 +94,8 @@ const sendData = async () => {
     })
 
   } catch (err) {
-    console.error(err)
+
+
   }
 }
 
@@ -89,9 +110,17 @@ const submitForm = () => {
 
 <template>
   <VCard flat>
-    <VCardTitle>
-      Create New Facility
+    <VCardTitle
+      cols="12"
+      class="d-flex gap-4"
+    >
+      <VRow no-gutters>
+        <VCol cols="6">
+          Edit Facility
+        </VCol>
+      </VRow>
     </VCardTitle>
+
     <VCardText>
       <VForm
         ref="refForm"
@@ -109,8 +138,6 @@ const submitForm = () => {
               label="Facility Name"
               placeholder="Splash"
             />
-
-
           </VCol>
 
           <VCol
@@ -119,11 +146,10 @@ const submitForm = () => {
           >
             <AppTextField
               v-model="licenseNo"
-
+              :rules="[requiredValidator]"
               label="License Number"
               placeholder="xxxx-xxxx-xxxx"
             />
-            <span class="text-red-600" v-if="errors.licence_no">{{ errors.licence_no[0] }}</span>
           </VCol>
 
           <VCol
@@ -135,12 +161,10 @@ const submitForm = () => {
               label="Time Zone"
               placeholder="Select Time Zone"
               :items="timeZones"
-
+              :rules="[requiredValidator]"
               item-title="name"
               item-value="id"
             />
-            <span class="text-red" v-if="errors.time_zone_id">{{ errors.time_zone_id[0] }}</span>
-
           </VCol>
 
           <VCol
@@ -152,26 +176,26 @@ const submitForm = () => {
               label="Payroll Cycle"
               placeholder="Select Payroll Cycle"
               :items="payrollCycles"
-
+              :rules="[requiredValidator]"
               item-title="name"
               item-value="id"
             />
-            <span class="v-messages__message" v-if="errors.pay_roll_cycle_id">{{ errors.pay_roll_cycle_id[0] }}</span>
           </VCol>
-
           <VCol
             cols="12"
             class="d-flex gap-4"
           >
-            <VBtn type="submit">
+            <VBtn 
+              type="submit" 
+              :disabled=" invalid "
+            >
               Submit
             </VBtn>
-
             <VBtn
               color="secondary"
               variant="tonal"
               prepend-icon="tabler-arrow-left"
-              :to="{ name: 'facilities-list' }"
+              :to="{ name: 'companies-list' }"
             >
               {{ $t('Back') }}
             </VBtn>

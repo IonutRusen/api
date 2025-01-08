@@ -5,6 +5,7 @@ import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?raw'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 import { useRouter } from "vue-router"
+import AppTextField from "@core/components/app-form-elements/AppTextField.vue";
 
 definePage({
   meta: {

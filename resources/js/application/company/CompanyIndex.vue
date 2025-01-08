@@ -45,8 +45,7 @@ const headers = [
 
 const {
   data: companiesData,
-  execute: fetchcompanies,
-} = await useApi(createUrl('v1/companies', {
+} = await useApi(createUrl('companies', {
   method: 'GET',
   query: {
     q: searchQuery,
@@ -152,7 +151,7 @@ const confirmDelete = async id => {
             prepend-icon="tabler-plus"
             :to="{ name: 'companies-create' }"
           >
-            {{ $t('Add New Facility') }}
+            {{ $t('Add New Company') }}
           </VBtn>
         </div>
       </VCardText>

@@ -18,7 +18,7 @@ const errors = ref({})
 
 const sendData = async () => {
   try {
-    const res = await $api('/facility', {
+    const res = await $api('/company', {
       method: 'POST',
       body: {
         name: name.value,
@@ -60,7 +60,7 @@ const submitForm = () => {
 <template>
   <VCard flat>
     <VCardTitle>
-      Create New Facility
+      Create New Company
     </VCardTitle>
     <VCardText>
       <VForm

@@ -1,7 +1,7 @@
 <script setup>
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue"
-import AppSelect from "@core/components/app-form-elements/AppSelect.vue"
 import AppTextarea from "@core/components/app-form-elements/AppTextarea.vue";
+import Swal from "sweetalert2";
 
 const invalid = false
 const route = useRoute()
@@ -13,52 +13,28 @@ const name = ref('')
 const website = ref(null)
 const description = ref(null)
 
-const licenseNo = ref('')
 const isFormValid = ref(false)
 const refForm = ref()
 const errors = ref({})
 
 
-onMounted(() => {
+/*onMounted(() => {
     fetchFacility()
-})
+})*/
 
-const fetchFacility = async () => {
-    try {
-        const res = await $api(`v1/companies/${route.params.id}`, {
-            method: 'GET',
-        })
+const {
+    data: rawCompaniesData,
+}  = await useApi(createUrl(`companies/${route.params.id}`, {
+    method: 'GET',
+}))
+
+const companies = computed(() => rawCompaniesData.value.data)
+name.value = companies.value.attributes.name
+website.value = companies.value.attributes.website
+description.value = companies.value.attributes.description
 
 
-
-        if (res) {
-            name.value = res.data.attributes.name
-            website.value = res.data.attributes.website
-            description.value = res.data.attributes.description
-        }
-    } catch (err) {
-        if (err.response && err.response.status === 403) {
-            router.push('/companies/list')
-        } else {
-            console.error('An unexpected error occurred:', err)
-        }
-    }
-}
 /*
-const fetchPayrollCycles = async () => {
-    try {
-        const res = await $api(`/options/payroll-cycles`, {
-            method: 'GET',
-        })
-
-        if (res) {
-            payrollCycles.value = res.data
-        }
-    } catch (err) {
-        console.error(err)
-    }
-}
-
 const fetchTimeZones = async () => {
     try {
         const res = await $api(`/options/time-zones`, {
@@ -75,30 +51,18 @@ const fetchTimeZones = async () => {
 
 const sendData = async () => {
     try {
-        const res = await $api(`v1/companies/${route.params.id}`, {
-            method: 'PUT',
-            body: {
+        const res = await useApi(`companies/${route.params.id}`).put({
                 name: name.value,
                 website: website.value,
-                description: description.value,
+                description: description.value
 
-                /*   pay_roll_cycle_id: payrollCycleId.value,
-                company_id: 1,*/
-            },
-            onResponseError({ response }) {
+            })
 
-                errors.value = response._data.errors
-                console.log(response._data.errors)
-            },
-        })
-
-        if (res) {
-            console.log('success')
-        }
-
-      /*  await nextTick(() => {
-            router.push('/companies/list')
-        })*/
+        await Swal.fire(
+            'Company Updated',
+            'Company has been updated successfully.',
+            'success',
+        )
 
     } catch (err) {
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'auth'], function (): void {
+Route::group(['prefix' => 'v1/auth'], function (): void {
     Route::post('login', [AuthController::class, 'login'])->name('user.login');
 
     Route::group(['middleware' => 'auth:sanctum'], function (): void {
@@ -18,7 +18,7 @@ Route::group(['prefix' => 'auth'], function (): void {
 
 
 
-Route::middleware(['auth:sanctum'])->get('/user', fn(Request $request) => $request->user());
+Route::middleware(['auth:sanctum'])->get('v1/user', fn(Request $request) => $request->user());
 Route::prefix('v1')->as('v1:')->middleware('auth:sanctum')->group(static function (): void {
     Route::prefix('companies')->as('companies:')
         ->group(base_path(

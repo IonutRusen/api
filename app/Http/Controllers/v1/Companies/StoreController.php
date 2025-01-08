@@ -49,10 +49,6 @@ final readonly class StoreController
                 status: Status::NOT_FOUND,
             );
         }
-        return new ModelResponse(
-            new CompanyResource(
-                resource: $company,
-            ),
-        );
+
     }
 }

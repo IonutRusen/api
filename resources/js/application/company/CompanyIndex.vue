@@ -45,7 +45,7 @@ const headers = [
 
 const {
   data: companiesData,
-} = await useApi(createUrl('companies', {
+} = await $api(createUrl('/companies', {
   method: 'GET',
   query: {
     q: searchQuery,

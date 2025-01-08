@@ -103,16 +103,8 @@ export default [
             to: 'front-pages-payment',
             target: '_blank',
           },
-          {
-            title: 'Checkout',
-            to: 'front-pages-checkout',
-            target: '_blank',
-          },
-          {
-            title: 'Help Center',
-            to: 'front-pages-help-center',
-            target: '_blank',
-          },
+
+
         ],
       },
     ],

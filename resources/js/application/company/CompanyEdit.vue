@@ -2,12 +2,13 @@
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue"
 import AppTextarea from "@core/components/app-form-elements/AppTextarea.vue";
 import Swal from "sweetalert2";
+import CompanyAddressCreate from "@/application/company/addresses/CompanyAddressCreate.vue";
+import CompanyAddressIndex from "@/application/company/addresses/CompanyAddressIndex.vue";
+
+const showAddressForm = ref(true)
 
 const invalid = false
 const route = useRoute()
-const router = useRouter()
-
-
 
 const name = ref('')
 const website = ref(null)
@@ -17,6 +18,7 @@ const isFormValid = ref(false)
 const refForm = ref()
 const errors = ref({})
 
+const addresses = ref()
 
 /*onMounted(() => {
     fetchFacility()
@@ -28,11 +30,16 @@ const {
     method: 'GET',
 }))
 
-const companies = computed(() => rawCompaniesData.value.data)
-name.value = companies.value.attributes.name
-website.value = companies.value.attributes.website
-description.value = companies.value.attributes.description
+const company = computed(() => rawCompaniesData.value.data)
+name.value = company.value.attributes.name
+website.value = company.value.attributes.website
+description.value = company.value.attributes.description
 
+addresses.value = company.value.attributes.relationship.addresses
+
+const toggleshowAddressForm = () => {
+    showAddressForm.value = true
+}
 
 /*
 const fetchTimeZones = async () => {
@@ -128,8 +135,8 @@ const submitForm = () => {
           >
             <AppTextarea
               v-model="description"
-              label="Time Zone"
-              placeholder="Select Time Zone"
+              label="Description"
+              placeholder="Description"
               :items="description"
               :rules="[requiredValidator]"
             />
@@ -159,4 +166,8 @@ const submitForm = () => {
       </VForm>
     </VCardText>
   </VCard>
+    <VCard class="mt-6">
+        <CompanyAddressIndex :addresses="addresses" @showAddressForm="toggleshowAddressForm" v-if="!showAddressForm"/>
+        <CompanyAddressCreate v-else/>
+    </VCard>
 </template>

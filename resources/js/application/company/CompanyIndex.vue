@@ -45,7 +45,7 @@ const headers = [
 
 const {
   data: companiesData,
-    execute: fetchCompanies,
+  execute: fetchCompanies,
 } = await useApi(createUrl('companies', {
   method: 'GET',
   query: {
@@ -220,7 +220,6 @@ const confirmDelete = async () => {
             size="x-small"
             color="primary"
             rounded
-            @click="editUser(item.id)"
           />
 
           <VDialog

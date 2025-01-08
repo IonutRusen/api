@@ -38,7 +38,7 @@ const sendData = async () => {
 
 
         await nextTick(() => {
-            router.replace('/companies/list')
+            router.replace('/companies/edit/' + res.id)
         })
 
     } catch (err) {
@@ -97,8 +97,8 @@ const sendData = async () => {
                     >
                         <AppTextarea
                             v-model="description"
-                            label="Time Zone"
-                            placeholder="Select Time Zone"
+                            label="Description"
+                            placeholder="Description"
                             :items="description"
                             :rules="[requiredValidator]"
                         />

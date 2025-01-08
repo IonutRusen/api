@@ -13,11 +13,14 @@ final readonly class WriteRequest
         private DatabaseManager $database,
     ) {}
 
-    public function handle(object $payload, string $class, ?Model $exisitingModel = null): void
+    /**
+     * @throws \Throwable
+     */
+    public function handle(object $payload, string $class, ?Model $existingModel = null): Model
     {
-        $this->database->transaction(
-            callback: fn() => $exisitingModel
-                 ? $exisitingModel->update(
+        return $this->database->transaction(
+            callback: fn() => $existingModel
+                 ? $existingModel->update(
                      attributes: $payload->toArray(),
                  )
                  : $class::create(

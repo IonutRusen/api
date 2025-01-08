@@ -4,32 +4,55 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\v1\Companies;
 
+use App\ApiResponses\ApiError;
+use App\Enums\Status;
 use App\Http\Requests\v1\Company\CompanyRequest;
+use App\Http\Requests\v1\Services\WriteRequest;
+use App\Http\Resources\v1\CompanyResource;
+use App\Http\Responses\ApiErrorResponse;
+use App\Http\Responses\ModelResponse;
 use App\Http\Responses\v1\MessageResponse;
 use App\Jobs\v1\Company\CreateNewCompanyJob;
+use App\Models\Company;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 final readonly class StoreController
 {
-    public function __construct(
-        private Dispatcher $bus,
-    ) {}
-
-
     public function __invoke(CompanyRequest $request): Responsable
     {
 
-        $this->bus->dispatch(
-            command: new CreateNewCompanyJob(
-                payload: $request->payload(),
-            ),
-        );
+        $writeRequest = resolve(WriteRequest::class);
 
-        return new MessageResponse(
-            message: __('services.v1.create.success'),
-            status: Response::HTTP_ACCEPTED,
+        try {
+            return new ModelResponse(
+                new CompanyResource(
+                    resource: $writeRequest->handle(
+                        payload: $request->payload(),
+                        class: Company::class,
+                    ),
+                ),
+            );
+
+
+        } catch (Throwable $exception) {
+            new ApiErrorResponse(
+                data: new ApiError(
+                    title: 'Not Found',
+                    detail: $exception->getMessage(),
+                    instance: $request->path(),
+                    code: (string)Status::NOT_FOUND->value,
+                    link: 'https://docs.domain.com/errors/not-found',
+                ),
+                status: Status::NOT_FOUND,
+            );
+        }
+        return new ModelResponse(
+            new CompanyResource(
+                resource: $company,
+            ),
         );
     }
 }

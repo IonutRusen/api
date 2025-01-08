@@ -3,6 +3,7 @@ import Swal from "sweetalert2"
 
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue"
 import AppSelect from "@core/components/app-form-elements/AppSelect.vue"
+import TablePagination from "@core/components/TablePagination.vue";
 
 const searchQuery = ref('')
 const selectedStatus = ref()
@@ -11,8 +12,7 @@ const itemsPerPage = ref(10)
 const page = ref(1)
 const sortBy = ref()
 const orderBy = ref()
-const selectedRows = ref([])
-const selectedUser = ref(null)
+const selectedCompany = ref(null)
 const deleteDialog = ref(false)
 
 const updateOptions = options => {
@@ -45,7 +45,8 @@ const headers = [
 
 const {
   data: companiesData,
-} = await $api(createUrl('/companies', {
+    execute: fetchCompanies,
+} = await useApi(createUrl('companies', {
   method: 'GET',
   query: {
     q: searchQuery,
@@ -85,27 +86,27 @@ const resolveUserStatusVariant = stat => {
 const isAddNewUserDrawerVisible = ref(false)
 const isEditUserDrawerVisible = ref(false)
 
-const editUser = async id => {
-  selectedUser.value = id
-  isEditUserDrawerVisible.value = true
-}
 
-const deleteUser = async id => {
+
+const deleteCompany = async id => {
   deleteDialog.value = true
+    selectedCompany.value = id
 }
 
 const closeDelete = () => {
   deleteDialog.value = false
+    selectedCompany.value = null
 }
 
-const confirmDelete = async id => {
+const confirmDelete = async () => {
+
   try {
-    await $api(`/facility/${id}`, {
+    await $api(`/companies/${selectedCompany.value}`, {
       method: 'DELETE',
     })
 
     deleteDialog.value = false
-    await fetchcompanies()
+    await fetchCompanies()
     await Swal.fire(
       'Facility deleted',
       'Facility has been deleted successfully.',
@@ -209,7 +210,7 @@ const confirmDelete = async id => {
             size="x-small"
             color="error"
             rounded
-            @click="deleteUser"
+            @click="deleteCompany(item.id)"
           />
 
           <VBtn

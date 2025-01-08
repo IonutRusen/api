@@ -26,7 +26,7 @@ final class UpdateController
             $writeRequest->handle(
                 payload: $request->payload(),
                 class: Company::class,
-                exisitingModel: $company,
+                existingModel: $company,
             );
 
 

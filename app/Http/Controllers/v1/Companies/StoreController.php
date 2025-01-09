@@ -11,12 +11,8 @@ use App\Http\Requests\v1\Services\WriteRequest;
 use App\Http\Resources\v1\CompanyResource;
 use App\Http\Responses\ApiErrorResponse;
 use App\Http\Responses\ModelResponse;
-use App\Http\Responses\v1\MessageResponse;
-use App\Jobs\v1\Company\CreateNewCompanyJob;
 use App\Models\Company;
-use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Support\Responsable;
-use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 final readonly class StoreController

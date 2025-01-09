@@ -12,14 +12,21 @@ const headers = [
         key: 'name',
     },
     {
-        title: 'Website',
-        key: 'website',
-        sortable: true,
+        title: 'City',
+        key: 'city',
+
     },
     {
-        title: 'Created At',
-        key: 'created_at',
-        sortable: false,
+        title: 'State',
+        key: 'State',
+    },
+    {
+        title: 'Email',
+        key: 'email',
+    },
+    {
+        title: 'Phone',
+        key: 'phone',
     },
     {
         title: 'Actions',
@@ -73,99 +80,50 @@ const headers = [
                         <div class="d-flex align-center gap-x-4">
                             <div class="d-flex flex-column">
                                 {{ address.attributes.address }}
-                                <h6 class="text-base">
-<!--                                    <RouterLink
-                                        :to="{ name: 'companies-edit', params: { id: item.id } }"
-                                        class="font-weight-medium text-link"
-                                    >
-                                        {{ item.attributes.name }}
-                                    </RouterLink>-->
-                                </h6>
                             </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-center gap-x-4">
+                            <div class="d-flex flex-column">
+                                {{ address.attributes.city }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-center gap-x-4">
+                            <div class="d-flex flex-column">
+                                {{ address.attributes.state }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-center gap-x-4">
+                            <div class="d-flex flex-column">
+                                {{ address.attributes.email }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-center gap-x-4">
+                            <div class="d-flex flex-column">
+                                {{ address.attributes.phone }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <IconBtn @click="editItem(item)">
+                                <VIcon icon="tabler-edit" />
+                            </IconBtn>
+                            <IconBtn @click="deleteItem(item)">
+                                <VIcon icon="tabler-trash" />
+                            </IconBtn>
                         </div>
                     </td>
                 </tr>
                 </tbody>
-<!--                <template #item.name="{ item }">
-                    <div class="d-flex align-center gap-x-4">
-                        <div class="d-flex flex-column">
-                            <h6 class="text-base">
-                                <RouterLink
-                                    :to="{ name: 'companies-edit', params: { id: item.id } }"
-                                    class="font-weight-medium text-link"
-                                >
-                                    {{ item.attributes.name }}
-                                </RouterLink>
-                            </h6>
-                        </div>
-                    </div>
-                </template>
-                <template #item.website="{ item }">
-                    <div class="d-flex align-center gap-x-4">
-                        <div class="d-flex flex-column">
-                            <h6 class="text-base">
-                                {{ item.attributes.website }}
-                            </h6>
-                        </div>
-                    </div>
-                </template>
-                <template #item.created_at="{ item }">
-                    <div class="d-flex align-center gap-x-4">
-                        <div class="d-flex flex-column">
-                            <h6 class="text-base">
-                                {{ item.attributes.created.human }}
-                            </h6>
-                        </div>
-                    </div>
-                </template>
 
-                <template #item.actions="{ item }">
-                    <VBtn
-                        icon="tabler-trash"
-                        class="me-2"
-                        variant="tonal"
-                        size="x-small"
-                        color="error"
-                        rounded
-                        @click="deleteCompany(item.id)"
-                    />
-
-                    <VBtn
-                        :to="{ name: 'companies-edit', params: { id: item.id } }"
-                        icon="tabler-edit"
-                        variant="tonal"
-                        size="x-small"
-                        color="primary"
-                        rounded
-                    />
-
-                    <VDialog
-                        v-model="deleteDialog"
-                        max-width="500px"
-                    >
-                        <VCard title="Are you sure you want to delete this user?">
-                            <VCardText>
-                                <div class="d-flex justify-center gap-4">
-                                    <VBtn
-                                        color="error"
-
-                                        variant="outlined"
-                                        @click="closeDelete"
-                                    >
-                                        Cancel
-                                    </VBtn>
-                                    <VBtn
-                                        color="success"
-                                        variant="elevated"
-                                        @click="confirmDelete(item.id)"
-                                    >
-                                        OK
-                                    </VBtn>
-                                </div>
-                            </VCardText>
-                        </VCard>
-                    </VDialog>
-                </template>-->
 
 
             </VTable>

@@ -7,7 +7,7 @@
   <title>Vuexy - Vuejs Admin Dashboard Template</title>
   <link rel="stylesheet" type="text/css" href="{{ asset('loader.css') }}" />
   @vite(['resources/js/main.js'])
-    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+
 
 </head>
 

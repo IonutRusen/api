@@ -1,7 +1,8 @@
 <script setup>
-import { Loader } from "@googlemaps/js-api-loader";
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue";
-
+import { GoogleMap, Marker } from "vue3-google-map";
+const center = { lat: 40.689247, lng: -74.044502 }
+let apikey = import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY
 const invalid = ref(false)
 const isFormValid = ref(false)
 
@@ -21,11 +22,12 @@ const email = ref('');
 
 const submitForm = () => {
 
-    refForm.value?.validate().then(({ valid: isValid }) => {
+    refForm.value?.validate().then(({valid: isValid}) => {
         if (isValid)
             sendData()
     })
 }
+
 
 
 
@@ -34,6 +36,14 @@ const submitForm = () => {
 <template>
     <VCard flat>
 
+        <GoogleMap
+            :api-key="apikey"
+            style="width: 100%; height: 500px"
+            :center="center"
+            :zoom="15"
+        >
+            <Marker :options="{ position: center }" />
+        </GoogleMap>
         <VCardText>
             <VForm
                 ref="refForm"
@@ -72,7 +82,7 @@ const submitForm = () => {
                             v-model="state"
                             :rules="[requiredValidator]"
                             label="State"
-                            placeholder="State" />
+                            placeholder="State"/>
                     </VCol>
                     <VCol
                         cols="12"
@@ -81,7 +91,7 @@ const submitForm = () => {
                             v-model="zip"
                             :rules="[requiredValidator]"
                             label="Zip"
-                            placeholder="Zip" />
+                            placeholder="Zip"/>
                     </VCol>
                     <VCol
                         cols="12"
@@ -90,7 +100,7 @@ const submitForm = () => {
                             v-model="country"
                             :rules="[requiredValidator]"
                             label="Country"
-                            placeholder="Country" />
+                            placeholder="Country"/>
                     </VCol>
                     <VCol
                         cols="12"
@@ -99,7 +109,7 @@ const submitForm = () => {
                             v-model="phone"
                             :rules="[requiredValidator]"
                             label="Phone"
-                            placeholder="Phone" />
+                            placeholder="Phone"/>
                     </VCol>
                     <VCol
                         cols="12"
@@ -108,10 +118,8 @@ const submitForm = () => {
                             v-model="email"
                             :rules="[requiredValidator]"
                             label="Email"
-                            placeholder="Email" />
+                            placeholder="Email"/>
                     </VCol>
-
-
 
 
                     <VCol

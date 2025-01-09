@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('loader.css') }}" />
   @vite(['resources/js/main.js'])
 
-
 </head>
 
 <body>

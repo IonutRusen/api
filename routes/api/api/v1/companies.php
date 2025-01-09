@@ -14,3 +14,8 @@ Route::post('/', StoreController::class)->middleware('allow:post');
 Route::get('/{company}', ShowController::class)->middleware('allow:get');
 Route::put('/{company}', UpdateController::class)->middleware('allow:put');
 Route::delete('/{companyId}', DestroyController::class)->middleware('allow:delete');
+
+Route::prefix('/{company}/addresses')->as('addresses:')
+    ->group(base_path(
+        path: 'routes/api/api/v1/addresses.php',
+    ));

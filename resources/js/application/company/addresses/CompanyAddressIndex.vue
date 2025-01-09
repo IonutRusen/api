@@ -5,7 +5,7 @@ const props = defineProps({
  'addresses': Array
 })
 const companyId = `${route.params.id}`
-console.log(props.addresses)
+
 const headers = [
     {
         title: 'Name',

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import CompanyAddressCreate from "@/application/company/addresses/CompanyAddressCreate.vue";
 import CompanyAddressIndex from "@/application/company/addresses/CompanyAddressIndex.vue";
 
-const showAddressForm = ref(true)
+const showAddressForm = ref(false)
 
 const invalid = false
 const route = useRoute()
@@ -20,9 +20,7 @@ const errors = ref({})
 
 const addresses = ref()
 
-/*onMounted(() => {
-    fetchFacility()
-})*/
+const companyid = ref()
 
 const {
     data: rawCompaniesData,
@@ -31,6 +29,8 @@ const {
 }))
 
 const company = computed(() => rawCompaniesData.value.data)
+
+companyid.value = company.value.id
 name.value = company.value.attributes.name
 website.value = company.value.attributes.website
 description.value = company.value.attributes.description
@@ -38,7 +38,7 @@ description.value = company.value.attributes.description
 addresses.value = company.value.attributes.relationship.addresses
 
 const toggleshowAddressForm = () => {
-    showAddressForm.value = true
+    showAddressForm.value = !showAddressForm.value
 }
 
 /*
@@ -168,6 +168,6 @@ const submitForm = () => {
   </VCard>
     <VCard class="mt-6">
         <CompanyAddressIndex :addresses="addresses" @showAddressForm="toggleshowAddressForm" v-if="!showAddressForm"/>
-        <CompanyAddressCreate v-else/>
+        <CompanyAddressCreate v-else :companyId="companyid" @showAddressForm="toggleshowAddressForm"/>
     </VCard>
 </template>

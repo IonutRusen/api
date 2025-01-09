@@ -143,7 +143,6 @@ const currentStep = ref(0)
         </VCard>
       </div>
     </VContainer>
-    <Footer />
   </div>
 </template>
 

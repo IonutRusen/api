@@ -48,7 +48,6 @@ import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 
     <!-- 👉 Footer -->
     <template #footer>
-      <Footer />
     </template>
 
     <!-- 👉 Customizer -->

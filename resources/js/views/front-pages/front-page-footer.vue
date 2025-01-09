@@ -33,25 +33,10 @@ const pagesList = [
 ]
 
 const demoList = [
-  {
-    title: 'Vertical Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-laravel-admin-template/demo-1/dashboards/analytics',
-  },
-  {
-    title: 'Horizontal Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-5/dashboards/analytics',
-  },
-  {
-    title: 'Bordered Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-2/dashboards/analytics',
-  },
-  {
-    title: 'Semi Dark Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-3/dashboards/analytics',
-  },
+
   {
     title: 'Dark Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-4/dashboards/analytics',
+    to: 'https://analytics',
   },
 ]
 </script>
@@ -232,7 +217,7 @@ const demoList = [
             Made With ❤️ for a better web.
           </div>
 
-          <div class="d-flex gap-x-6">
+<!--          <div class="d-flex gap-x-6">
             <template
               v-for="(item, index) in [
                 { title: 'github', icon: 'tabler-brand-github-filled', href: 'https://github.com/pixinvent' },
@@ -254,7 +239,7 @@ const demoList = [
                 />
               </a>
             </template>
-          </div>
+          </div>-->
         </div>
       </VContainer>
     </div>

@@ -39,8 +39,23 @@ addresses.value = company.value.attributes.relationship.addresses
 
 const toggleshowAddressForm = () => {
     showAddressForm.value = !showAddressForm.value
+    if (!showAddressForm.value){
+        fetchAddresses()
+    }
 }
+const fetchAddresses = async () => {
+    try {
+        const res = await $api(`/companies/${companyid.value}/addresses`, {
+            method: 'GET',
+        })
 
+        if (res) {
+            addresses.value = res.data
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
 /*
 const fetchTimeZones = async () => {
     try {

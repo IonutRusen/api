@@ -27,11 +27,7 @@ const suggestionGroups = [
         title: 'CRM',
         url: { name: 'dashboards-crm' },
       },
-      {
-        icon: 'tabler-shopping-cart',
-        title: 'eCommerce',
-        url: { name: 'dashboards-ecommerce' },
-      },
+
       {
         icon: 'tabler-truck',
         title: 'Logistics',

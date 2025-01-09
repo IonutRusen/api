@@ -271,9 +271,8 @@ const isPricingPlanDialogVisible = ref(false)
     </VContainer>
 
     <!-- 👉 Footer -->
-    <Footer />
 
-    <PricingPlanDialog v-model:is-dialog-visible="isPricingPlanDialogVisible" />
+
   </div>
 </template>
 

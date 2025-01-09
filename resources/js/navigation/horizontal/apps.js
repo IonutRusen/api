@@ -11,14 +11,7 @@ export default [
             title: 'Dashboard',
             to: 'apps-ecommerce-dashboard',
           },
-          {
-            title: 'Product',
-            children: [
-              { title: 'List', to: 'apps-ecommerce-product-list' },
-              { title: 'Add', to: 'apps-ecommerce-product-add' },
-              { title: 'Category', to: 'apps-ecommerce-product-category-list' },
-            ],
-          },
+
           {
             title: 'Order',
             children: [

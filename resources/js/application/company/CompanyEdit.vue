@@ -27,7 +27,7 @@ const {
 }  = await useApi(createUrl(`companies/${route.params.id}`, {
     method: 'GET',
     query: {
-        include: 'addresses',
+        include: 'addresses.category',
 
     },
 }))

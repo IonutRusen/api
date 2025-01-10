@@ -22,6 +22,10 @@ Route::middleware(['auth:sanctum'])->get('v1/user', fn(Request $request) => $req
 Route::prefix('v1')->as('v1:')->middleware('auth:sanctum')->group(static function (): void {
     Route::prefix('companies')->as('companies:')
         ->group(base_path(
-            path: 'routes/api/api/v1/companies.php',
+            path: 'routes/api/v1/companies.php',
         ));
+    Route::prefix('categories')->as('categories')
+        ->group(base_path(
+        path: 'routes/api/v1/categories.php',
+    ));
 });

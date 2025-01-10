@@ -8,8 +8,12 @@ const addresses = ref(props.addresses)
 
 const headers = [
     {
-        title: 'Name',
-        key: 'name',
+        title: 'Category',
+        key: 'category',
+    },
+    {
+        title: 'Address',
+        key: 'address',
     },
     {
         title: 'City',
@@ -79,6 +83,13 @@ const headers = [
                     <td>
                         <div class="d-flex align-center gap-x-4">
                             <div class="d-flex flex-column">
+                                {{ address.attributes.relationship.category.attributes.title }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-center gap-x-4">
+                            <div class="d-flex flex-column">
                                 {{ address.attributes.address }}
                             </div>
                         </div>
@@ -113,7 +124,6 @@ const headers = [
                     </td>
                     <td>
                         <div class="d-flex gap-1">
-                            {{ address.id }}
                             <IconBtn   @click="$emit('showAddressForm',address.id)">
 
                                 <VIcon icon="tabler-edit" />

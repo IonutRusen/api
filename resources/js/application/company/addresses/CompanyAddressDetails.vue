@@ -1,6 +1,7 @@
 <script setup>
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue";
 import { loadGoogleMapsApi } from '@/utils/loadGoogleMapsApi.js';
+import AppSelect from "@core/components/app-form-elements/AppSelect.vue";
 /*import { GoogleMap, AdvancedMarker } from 'vue3-google-map'*/
 
 
@@ -35,12 +36,12 @@ const isFormValid = ref(false)
 const addressToEditId = ref()
 
 
+const parentCategories = ref([])
+
+const parentCategory = ref()
+
 addressToEditId.value = props.addressToEditId
-onMounted(async () => {
-    if (addressToEditId.value) {
-        await fetchAddress()
-    }
-})
+
 async function fetchAddress() {
     const {
         data: rawAddressData,
@@ -65,7 +66,27 @@ async function fetchAddress() {
 }
 
 
+const fetchParentCategories = async (parentCateg = null) => {
+    try {
+        const res = await $api(`/categories`, {
+            method: 'POST',
+            body: {
+                parent_id: parentCateg
+            }
+        })
 
+        if (res) {
+            parentCategories.value = res.data
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+function onCategoryChange(category) {
+    fetchParentCategories(category)
+
+}
 
 const sendData = async () => {
     try {
@@ -112,10 +133,19 @@ const submitForm = () => {
     })
 }
 
+watch(parentCategory, async (newQuestion) => {
+    fetchParentCategories(newQuestion)
+})
 
 
 const autocompleteInput = ref(null)
 onMounted(async () => {
+
+    await fetchParentCategories()
+    if (addressToEditId.value) {
+        await fetchAddress()
+    }
+
     try {
         const google = await loadGoogleMapsApi(apikey);
 
@@ -207,10 +237,36 @@ onMounted(async () => {
                 <VRow>
                     <VCol
                         cols="12"
-                        md="12"
+                        md="6"
                     >
+                        <AppSelect
+                            v-model="parentCategory"
+                            label="Payroll Cycle"
+                            placeholder="Select Category"
+                            :items="parentCategories"
+                            item-title="attributes.title"
+                            item-value="id"
+
+                        />
 
                     </VCol>
+                    <VCol
+                        cols="12"
+                        md="6"
+                    >
+<!--                        <AppSelect
+                            v-model="payrollCycleId"
+                            label="Payroll Cycle"
+                            placeholder="Select Payroll Cycle"
+                            :items="payrollCycles"
+
+                            item-title="name"
+                            item-value="id"
+                        />
+                        <span class="v-messages__message" v-if="errors.pay_roll_cycle_id">{{ errors.pay_roll_cycle_id[0] }}</span>-->
+                    </VCol>
+                </VRow>
+                <VRow>
                     <VCol
                         cols="12"
                         md="12"

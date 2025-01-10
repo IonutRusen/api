@@ -17,5 +17,5 @@ Route::delete('/{companyId}', DestroyController::class)->middleware('allow:delet
 
 Route::prefix('/{company}/addresses')->as('addresses:')
     ->group(base_path(
-        path: 'routes/api/api/v1/addresses.php',
+        path: 'routes/api/v1/addresses.php',
     ));

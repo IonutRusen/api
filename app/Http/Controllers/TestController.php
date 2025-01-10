@@ -64,7 +64,7 @@ final class TestController extends Controller
                         ]);
                     }
                 }
-                
+
             });
         });
 return response()->json(['message' => 'Categories created successfully'], 200);

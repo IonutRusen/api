@@ -113,11 +113,10 @@ const headers = [
                     </td>
                     <td>
                         <div class="d-flex gap-1">
-                            <IconBtn @click="editItem(item)">
+                            {{ address.id }}
+                            <IconBtn   @click="$emit('showAddressForm',address.id)">
+
                                 <VIcon icon="tabler-edit" />
-                            </IconBtn>
-                            <IconBtn @click="deleteItem(item)">
-                                <VIcon icon="tabler-trash" />
                             </IconBtn>
                         </div>
                     </td>

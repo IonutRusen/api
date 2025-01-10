@@ -1,4 +1,4 @@
-import CompanyAddressCreate from "@/application/company/addresses/CompanyAddressCreate.vue";
+import CompanyAddressCreate from "@/application/company/addresses/CompanyAddressDetails.vue";
 
 const emailRouteComponent = () => import('@/pages/apps/email/index.vue')
 const companiesList = () => import('./CompanyIndex.vue')

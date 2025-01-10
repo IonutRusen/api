@@ -2,14 +2,31 @@
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue";
 import { loadGoogleMapsApi } from '@/utils/loadGoogleMapsApi.js';
 import { GoogleMap, AdvancedMarker } from 'vue3-google-map'
-const items = ['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']
+
 
 const props = defineProps({
-    'companyId': String
+    'companyId': String,
+    'addressToEditId': String,
 })
 let apikey = import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY
 const invalid = ref(false)
 const isFormValid = ref(false)
+const addressToEditId = ref()
+
+
+addressToEditId.value = props.addressToEditId
+onMounted(async () => {
+    if (addressToEditId.value) {
+        await fetchAddress()
+    }
+})
+async function fetchAddress() {
+    const {
+        data: rawAddressData,
+    }  = await useApi(createUrl(`companies/${props.companyId}/addresses/${addressToEditId.value}`, {
+        method: 'GET',
+    }))
+}
 
 
 const refForm = ref()
@@ -27,6 +44,8 @@ const phone = ref();
 const email = ref();
 const lat = ref();
 const lng = ref();
+
+
 
 const sendData = async () => {
     try {

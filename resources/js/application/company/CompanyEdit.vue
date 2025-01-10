@@ -2,7 +2,7 @@
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue"
 import AppTextarea from "@core/components/app-form-elements/AppTextarea.vue";
 import Swal from "sweetalert2";
-import CompanyAddressCreate from "@/application/company/addresses/CompanyAddressCreate.vue";
+import CompanyAddressDetails from "@/application/company/addresses/CompanyAddressDetails.vue";
 import CompanyAddressIndex from "@/application/company/addresses/CompanyAddressIndex.vue";
 
 const showAddressForm = ref(false)
@@ -26,6 +26,10 @@ const {
     data: rawCompaniesData,
 }  = await useApi(createUrl(`companies/${route.params.id}`, {
     method: 'GET',
+    query: {
+        include: 'addresses',
+
+    },
 }))
 
 const company = computed(() => rawCompaniesData.value.data)
@@ -34,10 +38,13 @@ companyid.value = company.value.id
 name.value = company.value.attributes.name
 website.value = company.value.attributes.website
 description.value = company.value.attributes.description
+addresses.value = rawCompaniesData.value.included
 
-addresses.value = company.value.attributes.relationship.addresses
+const addressToEdit = ref(null)
 
-const toggleshowAddressForm = () => {
+const toggleshowAddressForm = (addressId = null) => {
+
+    addressToEdit.value = addressId
     showAddressForm.value = !showAddressForm.value
     if (!showAddressForm.value){
         fetchAddresses()
@@ -56,20 +63,14 @@ const fetchAddresses = async () => {
         console.error(err)
     }
 }
-/*
-const fetchTimeZones = async () => {
-    try {
-        const res = await $api(`/options/time-zones`, {
-            method: 'GET',
-        })
 
-        if (res) {
-            timeZones.value = res.data
-        }
-    } catch (err) {
-        console.error(err)
-    }
-}*/
+const submitForm = () => {
+
+    refForm.value?.validate().then(({ valid: isValid }) => {
+        if (isValid)
+            sendData()
+    })
+}
 
 const sendData = async () => {
     try {
@@ -92,13 +93,6 @@ const sendData = async () => {
     }
 }
 
-const submitForm = () => {
-
-    refForm.value?.validate().then(({ valid: isValid }) => {
-        if (isValid)
-            sendData()
-    })
-}
 </script>
 
 <template>
@@ -183,6 +177,6 @@ const submitForm = () => {
   </VCard>
     <VCard class="mt-6">
         <CompanyAddressIndex :addresses="addresses" @showAddressForm="toggleshowAddressForm" v-if="!showAddressForm"/>
-        <CompanyAddressCreate v-else :companyId="companyid" @showAddressForm="toggleshowAddressForm"/>
+        <CompanyAddressDetails v-else :companyId="companyid" @showAddressForm="toggleshowAddressForm" :addressToEditId="addressToEdit"/>
     </VCard>
 </template>

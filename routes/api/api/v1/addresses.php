@@ -7,4 +7,5 @@ use App\Http\Controllers\v1\Companies\Addresses;
 
 Route::post('/', Addresses\StoreController::class)->middleware('allow:post');
 Route::get('/', Addresses\IndexController::class)->middleware('allow:get');
+Route::get('/{addressId}', Addresses\ShowController::class)->middleware('allow:get');
 

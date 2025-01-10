@@ -70,7 +70,7 @@ declare global {
   const isToday: typeof import('./resources/js/@core/utils/helpers.js')['isToday']
   const kFormatter: typeof import('./resources/js/@core/utils/formatters.js')['kFormatter']
   const lengthValidator: typeof import('./resources/js/@core/utils/validators.js')['lengthValidator']
-  const loadGoogleMapsApi: typeof import('./resources/js/@core/utils/loadGoogleMapsApi.js')['loadGoogleMapsApi']
+  const loadGoogleMapsApi: typeof import('./resources/js/utils/loadGoogleMapsApi.js')['loadGoogleMapsApi']
   const logicAnd: typeof import('@vueuse/math')['logicAnd']
   const logicNot: typeof import('@vueuse/math')['logicNot']
   const logicOr: typeof import('@vueuse/math')['logicOr']
@@ -431,7 +431,7 @@ declare module 'vue' {
     readonly isToday: UnwrapRef<typeof import('./resources/js/@core/utils/helpers.js')['isToday']>
     readonly kFormatter: UnwrapRef<typeof import('./resources/js/@core/utils/formatters.js')['kFormatter']>
     readonly lengthValidator: UnwrapRef<typeof import('./resources/js/@core/utils/validators.js')['lengthValidator']>
-    readonly loadGoogleMapsApi: UnwrapRef<typeof import('./resources/js/@core/utils/loadGoogleMapsApi.js')['loadGoogleMapsApi']>
+    readonly loadGoogleMapsApi: UnwrapRef<typeof import('./resources/js/utils/loadGoogleMapsApi.js')['loadGoogleMapsApi']>
     readonly logicAnd: UnwrapRef<typeof import('@vueuse/math')['logicAnd']>
     readonly logicNot: UnwrapRef<typeof import('@vueuse/math')['logicNot']>
     readonly logicOr: UnwrapRef<typeof import('@vueuse/math')['logicOr']>

@@ -23,8 +23,9 @@ export const setupGuards = router => {
               (WARN: Don't allow executing further by return statement because next code will check for permissions)
              */
     if (to.meta.unauthenticatedOnly) {
+
       if (isLoggedIn)
-        return '/'
+        return '/dashboard'
       else
         return undefined
     }

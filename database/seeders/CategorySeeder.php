@@ -22,6 +22,7 @@ class CategorySeeder extends Seeder
             Categories::create([
                 'alias' => $parentCateg->alias,
                 'title' => $parentCateg->title,
+                'created_at' => now(),
 
             ]);
         });

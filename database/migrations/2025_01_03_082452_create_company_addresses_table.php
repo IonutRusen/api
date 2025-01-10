@@ -15,6 +15,7 @@ return new class () extends Migration {
         Schema::create('company_addresses', function (Blueprint $table): void {
             $table->ulid('id')->primary();
             $table->foreignUlid('company_id')->constrained()->cascadeOnDelete();
+            $table->foreignUlid('category_id')->constrained()->cascadeOnDelete();
             $table->string('address');
             $table->string('city');
             $table->string('state');
@@ -24,8 +25,6 @@ return new class () extends Migration {
             $table->string('email')->nullable();
             $table->string('website')->nullable();
             $table->geometry('location', subtype: 'point')->nullable();
-
-
             $table->timestamps();
         });
 

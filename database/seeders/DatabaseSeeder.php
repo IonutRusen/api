@@ -26,6 +26,11 @@ final class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(20)->create();
+        $this->call(
+            class : [
+                CategorySeeder::class
+            ]
+        );
 
         Company::factory()->times(500)->create();
         foreach (Company::all() as $company) {
@@ -35,10 +40,6 @@ final class DatabaseSeeder extends Seeder
         }
 
         //seed Categories
-        $this->call(
-            class : [
-                CategorySeeder::class
-            ]
-        );
+
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Categories;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use MatanYadaev\EloquentSpatial\Objects\Point;
@@ -17,6 +18,7 @@ final class CompanyAddressFactory extends Factory
     {
         return [
             'company_id' => Company::factory(),
+            'category_id' => Categories::inRandomOrder()->first()->id,
             'address' => $this->faker->address,
             'city' => $this->faker->city,
             'state' => $this->faker->state,

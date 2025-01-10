@@ -18,14 +18,14 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        /*
-                User::factory()->create([
-                    'name' => 'Test User',
-                    'email' => 'test@example.com',
-                    'password' => bcrypt('password'),
-                ]);
 
-                User::factory(20)->create();*/
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        User::factory(20)->create();
 
         Company::factory()->times(500)->create();
         foreach (Company::all() as $company) {
@@ -34,5 +34,11 @@ final class DatabaseSeeder extends Seeder
             ]);
         }
 
+        //seed Categories
+        $this->call(
+            class : [
+                CategorySeeder::class
+            ]
+        );
     }
 }

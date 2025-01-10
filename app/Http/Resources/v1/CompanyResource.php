@@ -21,9 +21,14 @@ final class CompanyResource extends JsonApiResource
      * @return array<string, mixed>
      */
 
-    public $relationships = [
-        'addresses' => CompanyAddressResource::class,
-    ];
+    public function toRelationships($request): array
+    {
+        return [
+            'addresses' => fn () => CompanyAddressResource::collection($this->addresses),
+
+        ];
+    }
+
     public function toAttributes(Request $request): array
     {
         return [
@@ -32,12 +37,7 @@ final class CompanyResource extends JsonApiResource
             'description' => $this->description,
             'created' => new DateResource(
                 resource: $this->created_at,
-            ),/* 'relationship' => [
-                'addresses' => $this->whenLoaded(
-                    'addresses',
-                    CompanyAddressResource::collection($this->addresses),
-                ),
-            ],*/
+            )
 
 
         ];

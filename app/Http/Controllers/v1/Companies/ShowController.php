@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 
 final readonly class ShowController
 {
+    public function __construct(
+        private FetchCompanies $query,
+    ) {}
 
     public function __invoke(Request $request, Company $company): Responsable
     {
@@ -20,8 +23,13 @@ final readonly class ShowController
             abort(403);
         };
 
+
         return  CompanyResource::make(
-            resource: $company,
+            resource: $this->query->handle(
+                allowedIncludes: ['addresses.category'],
+            )->find(
+                $company->id,
+            ),
         );
 
 

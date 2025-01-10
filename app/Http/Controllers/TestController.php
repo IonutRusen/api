@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\v1\CompanyResource;
-use App\Models\Categories;
+use App\Models\Category;
 use App\Queries\v1\FetchCompanies;
 use Illuminate\Http\Request;
 
@@ -45,7 +45,7 @@ final class TestController extends Controller
 
 
         $parentCategories->each(function ($parentCateg) {
-            Categories::create([
+            Category::create([
                 'alias' => $parentCateg->alias,
                 'title' => $parentCateg->title,
 
@@ -55,9 +55,9 @@ final class TestController extends Controller
         $categories->chunk(100)->each(function ($categories) {
             $categories->map(function ($category) {
                 if ($category->parent_aliases) {
-                    $parent = Categories::where('alias', $category->parent_aliases[0])->first();
+                    $parent = Category::where('alias', $category->parent_aliases[0])->first();
                     if ($parent) {
-                        return Categories::create([
+                        return Category::create([
                             'alias' => $category->alias,
                             'title' => $category->title,
                             'parent_id' => $parent->id,

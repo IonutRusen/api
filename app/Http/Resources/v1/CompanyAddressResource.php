@@ -9,13 +9,11 @@ use TiMacDonald\JsonApi\JsonApiResource;
 
 final class CompanyAddressResource extends JsonApiResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+
+
     public function toAttributes(Request $request): array
     {
+
         return [
             'company_id' => $this->company_id,
             'address' => $this->address,
@@ -27,6 +25,10 @@ final class CompanyAddressResource extends JsonApiResource
             'email' => $this->email,
             'website' => $this->website,
             'location' => $this->location,
+
+            'relationship' => [ 'category' => $this->relationLoaded('category') ? CategoryResource::make($this->category) : null],
+
+
         ];
     }
 }

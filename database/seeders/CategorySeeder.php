@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categories;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,7 +19,7 @@ class CategorySeeder extends Seeder
 
 
         $parentCategories->each(function ($parentCateg) {
-            Categories::create([
+            Category::create([
                 'alias' => $parentCateg->alias,
                 'title' => $parentCateg->title,
                 'created_at' => now(),
@@ -30,9 +30,9 @@ class CategorySeeder extends Seeder
         $categories->chunk(100)->each(function ($categories) {
             $categories->map(function ($category) {
                 if ($category->parent_aliases) {
-                    $parent = Categories::where('alias', $category->parent_aliases[0])->first();
+                    $parent = Category::where('alias', $category->parent_aliases[0])->first();
                     if ($parent) {
-                        return Categories::create([
+                        return Category::create([
                             'alias' => $category->alias,
                             'title' => $category->title,
                             'parent_id' => $parent->id,

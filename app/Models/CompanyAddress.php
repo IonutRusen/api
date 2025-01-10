@@ -41,4 +41,13 @@ final class CompanyAddress extends Model
             foreignKey: 'company_id',
         );
     }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(
+            related: Category::class,
+            foreignKey: 'category_id',
+        );
+
+    }
 }

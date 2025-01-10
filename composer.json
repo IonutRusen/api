@@ -17,7 +17,7 @@
     "matanyadaev/laravel-eloquent-spatial": "^4.4",
     "spatie/laravel-query-builder": "^6.2",
     "tightenco/ziggy": "^2.0",
-    "timacdonald/json-api": "v1.0.0-beta.7",
+    "timacdonald/json-api": "v1.0.0-v1.0.0-beta.7",
     "treblle/security-headers": "^0.0.3"
   },
   "require-dev": {

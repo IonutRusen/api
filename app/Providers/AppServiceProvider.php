@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Company;
+use App\Models\CompanyAddress;
+use App\Policies\v1\CompanyAddressPolicy;
 use App\Policies\v1\CompanyPolicy;
 use Gate;
 use Illuminate\Support\ServiceProvider;
@@ -33,5 +35,7 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Company::class, CompanyPolicy::class);
+        Gate::policy(CompanyAddress::class, CompanyAddressPolicy::class);
+
     }
 }

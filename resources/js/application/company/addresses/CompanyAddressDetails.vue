@@ -1,13 +1,34 @@
 <script setup>
 import AppTextField from "@core/components/app-form-elements/AppTextField.vue";
 import { loadGoogleMapsApi } from '@/utils/loadGoogleMapsApi.js';
-import { GoogleMap, AdvancedMarker } from 'vue3-google-map'
+/*import { GoogleMap, AdvancedMarker } from 'vue3-google-map'*/
 
+
+const refForm = ref()
+const errors = ref({
+    email: undefined,
+    password: undefined,
+})
 
 const props = defineProps({
     'companyId': String,
     'addressToEditId': String,
 })
+// post url for creating a new address
+let apiurl = '/companies/' + props.companyId + '/addresses';
+let method = 'POST'
+
+const address = ref();
+const city = ref();
+const state = ref();
+const zip = ref();
+const country = ref();
+const phone = ref();
+const email = ref();
+const lat = ref();
+const lng = ref();
+
+
 let apikey = import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY
 const invalid = ref(false)
 const isFormValid = ref(false)
@@ -26,31 +47,30 @@ async function fetchAddress() {
     }  = await useApi(createUrl(`companies/${props.companyId}/addresses/${addressToEditId.value}`, {
         method: 'GET',
     }))
+
+    address.value = rawAddressData.value.data.attributes.address
+    city.value = rawAddressData.value.data.attributes.city
+    state.value = rawAddressData.value.data.attributes.state
+    zip.value = rawAddressData.value.data.attributes.zip
+    country.value = rawAddressData.value.data.attributes.country
+    phone.value = rawAddressData.value.data.attributes.phone
+    email.value = rawAddressData.value.data.attributes.email
+    lat.value = rawAddressData.value.data.attributes.location.coordinates[0]
+    lng.value = rawAddressData.value.data.attributes.location.coordinates[1]
+
+    // update the apiurl to put
+    apiurl = '/companies/' + props.companyId + '/addresses/' + addressToEditId.value
+    method = 'PUT'
+
 }
 
-
-const refForm = ref()
-const errors = ref({
-    email: undefined,
-    password: undefined,
-})
-
-const address = ref();
-const city = ref();
-const state = ref();
-const zip = ref();
-const country = ref();
-const phone = ref();
-const email = ref();
-const lat = ref();
-const lng = ref();
 
 
 
 const sendData = async () => {
     try {
-        const res = await $api('/companies/' + props.companyId + '/addresses', {
-            method: 'POST',
+        await $api(apiurl, {
+            method: method,
             body: {
                 company_id: props.companyId,
                 address: address.value,

@@ -4,16 +4,16 @@ namespace App\Policies\v1;
 
 use App\Models\CompanyAddress;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
-
-final class CompanyAddressPolicy
+class CompanyAddressPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,7 +21,8 @@ final class CompanyAddressPolicy
      */
     public function view(User $user, CompanyAddress $companyAddress): bool
     {
-        return $user->id === $companyAddress->Company->user_id;
+
+        return $user->id === $companyAddress->company->user_id;
     }
 
     /**
@@ -37,7 +38,7 @@ final class CompanyAddressPolicy
      */
     public function update(User $user, CompanyAddress $companyAddress): bool
     {
-        return false;
+        return $user->id === $companyAddress->company->user_id;
     }
 
     /**
@@ -63,5 +64,4 @@ final class CompanyAddressPolicy
     {
         return false;
     }
-
 }

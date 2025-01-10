@@ -4,7 +4,7 @@ const route = useRoute()
 const props = defineProps({
  'addresses': Array
 })
-const companyId = `${route.params.id}`
+const addresses = ref(props.addresses)
 
 const headers = [
     {
@@ -66,7 +66,7 @@ const headers = [
                     </tr>
                 </thead>
                 <tbody>
-                <tr v-if="addresses.length === 0">
+               <tr v-if="!addresses">
                     <td colspan="6">
                         <div class="d-flex justify-center align-center">
                             <p class="text-center">
@@ -75,7 +75,7 @@ const headers = [
                         </div>
                     </td>
                 </tr>
-                <tr v-else v-for="address in addresses">
+                <tr v-else v-for="address in props.addresses">
                     <td>
                         <div class="d-flex align-center gap-x-4">
                             <div class="d-flex flex-column">
